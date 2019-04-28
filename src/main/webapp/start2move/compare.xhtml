@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+        <ui:composition template="../templates/masterTemplate.xhtml">
+            <ui:define name="content">
+                <h:form id="lngForm">
+                    <h:commandButton id="translate" onclick="#{compare_MB.translate(language_MB.language)}" value="" style="display: none"/>
+                </h:form>
+                <div class="comparison">
+                    <div class="jumbotron d-flex align-items-center">
+                        <div class="container">
+                            <h1 class="display-4">#{compare_MB.getFieldContent('main','title')}</h1>
+                            <p class="lead">#{compare_MB.getFieldContent('main','explanation')}</p>
+                            <hr class="my-4"/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm" style="display:#{compare_MB.object1.nonEmptyObj?'block':'none'}">
+                                        <div class="chartBox">
+                                            <h4>#{compare_MB.object1.header}</h4>
+                                        </div>
+                                        <div class="chartBox">
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfSch')}: #{compare_MB.object1.schoolsNo}</h6>
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfHos')}: #{compare_MB.object1.hospitalsNo}</h6>
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfStp')}: #{compare_MB.object1.busStopsNo}</h6>
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfTrn')}: #{compare_MB.object1.trainStationsNo}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm compare-left" style="display:#{compare_MB.object2.nonEmptyObj?'block':'none'}">
+                                        <div class="chartBox">
+                                            <h4>#{compare_MB.object2.header}</h4>
+                                        </div>
+                                        <div class="chartBox">
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfSch')}: #{compare_MB.object2.schoolsNo}</h6>
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfHos')}: #{compare_MB.object2.hospitalsNo}</h6>
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfStp')}: #{compare_MB.object2.busStopsNo}</h6>
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfTrn')}: #{compare_MB.object2.trainStationsNo}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm compare-left" style="display:#{compare_MB.object3.nonEmptyObj?'block':'none'}">
+                                        <div class="chartBox"> 
+                                            <h4>#{compare_MB.object3.header}</h4>
+                                        </div>
+                                        <div class="chartBox">
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfSch')}: #{compare_MB.object3.schoolsNo}</h6>
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfHos')}: #{compare_MB.object3.hospitalsNo}</h6>
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfStp')}: #{compare_MB.object3.busStopsNo}</h6>
+                                            <h6>#{compare_MB.getFieldContent('main','numberOfTrn')}: #{compare_MB.object3.trainStationsNo}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm chartBox" style="display:#{compare_MB.object1.nonEmptyObj?'block':'none'}">
+                                        <canvas id="item1PieChart"></canvas>
+                                    </div>
+                                    <div class="col-sm compare-left chartBox" style="display:#{compare_MB.object2.nonEmptyObj?'block':'none'}">
+                                        <canvas id="item2PieChart"></canvas>
+                                    </div>
+                                    <div class="col-sm compare-left chartBox" style="display:#{compare_MB.object3.nonEmptyObj?'block':'none'}">
+                                        <canvas id="item3PieChart"></canvas>
+                                    </div>
+                                </div>
+                                <div class="row resultBox">
+                                    <div class="col-sm chartBox" style="display:#{compare_MB.object1.nonEmptyObj?'block':'none'}">
+                                        <canvas id="item1crimeChart"></canvas>
+                                    </div>
+                                    <div class="col-sm compare-left chartBox" style="display:#{compare_MB.object2.nonEmptyObj?'block':'none'}">
+                                        <canvas id="item2crimeChart"></canvas>
+                                    </div>
+                                    <div class="col-sm compare-left chartBox" style="display:#{compare_MB.object3.nonEmptyObj?'block':'none'}">
+                                        <canvas id="item3crimeChart"></canvas>
+                                    </div>
+                                </div>
+                                <div class="row resultBox chartBox">
+                                    <div class="col-sm" style="display:#{compare_MB.object1.nonEmptyObj?'block':'none'}">
+                                        <div style="display:#{compare_MB.object1.rentChart?'block':'none'}">
+                                            <canvas id="item1RentChart"></canvas>
+                                        </div>
+                                        <div style="display:#{compare_MB.object1.rentChart?'none':'block'}">
+                                            <h6>#{compare_MB.getFieldContent('main','notFoundRent')}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm compare-left chartBox" style="display:#{compare_MB.object2.nonEmptyObj?'block':'none'}">
+                                        <div style="display:#{compare_MB.object2.rentChart?'block':'none'}">
+                                            <canvas id="item2RentChart" ></canvas>
+                                        </div>
+                                        <div style="display:#{compare_MB.object2.rentChart?'none':'block'}">
+                                            <h6>#{compare_MB.getFieldContent('main','notFoundRent')}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm compare-left chartBox" style="display:#{compare_MB.object3.nonEmptyObj?'block':'none'}">
+                                        <div style="display:#{compare_MB.object3.rentChart?'block':'none'}">
+                                            <canvas id="item3RentChart"></canvas>
+                                        </div>
+                                        <div style="display:#{compare_MB.object3.rentChart?'none':'block'}">
+                                            <h6>#{compare_MB.getFieldContent('main','notFoundRent')}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row resultBox">
+                                    <div class="col-sm" style="display:#{compare_MB.object1.nonEmptyObj?'block':'none'}">
+                                        <div style="display:#{compare_MB.object1.housAndLandChart?'block':'none'}">
+                                            <canvas id="item1RealChart"></canvas>
+                                        </div>
+                                        <div style="display:#{compare_MB.object1.housAndLandChart?'none':'block'}">
+                                            <h6>#{compare_MB.getFieldContent('main','notFoundReal')}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm compare-left" style="display:#{compare_MB.object2.nonEmptyObj?'block':'none'}">
+                                        <div style="display:#{compare_MB.object2.housAndLandChart?'block':'none'}">
+                                            <canvas id="item2RealChart"></canvas>
+                                        </div>
+                                        <div style="display:#{compare_MB.object2.housAndLandChart?'none':'block'}">
+                                            <h6>#{compare_MB.getFieldContent('main','notFoundReal')}</h6>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm compare-left" style="display:#{compare_MB.object3.nonEmptyObj?'block':'none'}">
+                                        <div style="display:#{compare_MB.object3.housAndLandChart?'block':'none'}">
+                                            <canvas id="item3RealChart"></canvas>
+                                        </div>
+                                        <div style="display:#{compare_MB.object3.housAndLandChart?'none':'block'}">
+                                            <h6>#{compare_MB.getFieldContent('main','notFoundReal')}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="back-button">
+                                    <h:commandButton class="btn btn-secondary btn-lg" value="#{compare_MB.getFieldContent('main','buttonBack')}">
+                                        <f:ajax listener="#{compare_MB.returnToOrigin()}" render="@form"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

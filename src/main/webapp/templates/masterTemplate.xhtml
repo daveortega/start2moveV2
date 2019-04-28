@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+
+        <title>Start to Move - Regional Victoria</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom fonts for this template -->
+        <link href="../resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"/>
+        <link href="../resources/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+
+        <!-- Custom styles for this template -->
+        <link href="../resources/css/landing-page.min.css" rel="stylesheet" />
+        <link href="../resources/css/landing-page.css" rel="stylesheet" />
+        <script src="../resources/js/Chart.js"></script>
+    </h:head>
+
+    <h:body>
+        <div id="top" class="top">
+            <ui:insert name="top">
+                <h:form id="lngMenuForm">
+                    <h:commandButton id="translateMenu" onclick="#{menu_MB.translate(language_MB.language)}" value="" style="display: none" />
+                </h:form>
+
+                <!-- Navigation -->
+                <h:form id="menuForm">
+                    <nav class="navbar navbar-expand-md navbar-light bg-light">
+                        <div class="container">
+                            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                                <div class="logo-div">
+                                    <i class="fas fa-map-signs fa-2x text-primary"></i>
+                                </div>
+                                <h:link class="navbar-brand" value="Start2Move" outcome="index" />
+                            </div>
+                            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                                <nav class="my-2 my-md-0 mr-md-3">
+                                    <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link1')}" outcome="index" />
+                                    <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link2')}" outcome="survey" />
+                                    <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link3')}" outcome="selectComp"/>
+                                    <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link4')}" outcome="construction"/>
+                                </nav>
+                                <div class="logo-div">
+                                    <h:commandButton value="#{menu_MB.getFieldContent('navbar','button')}" 
+                                                     class="btn btn-outline-danger" 
+                                                     action="#{logoutBacking.submit}"/>
+                                </div>
+                                <div class="logo-div">
+                                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                        #{language_MB.language}
+                                    </button>
+                                </div>
+                            </div> 
+                        </div>
+                    </nav>
+                </h:form>
+            </ui:insert>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">#{menu_MB.getFieldContent('modal','title')}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h:form id="modalForm">
+                            <h:selectOneMenu id="langOptions" binding="#{lang}" value="#{language_MB.language}"> 
+                                <f:selectItem itemValue="EN" itemLabel = "English"/> 
+                                <f:selectItem itemValue="ES" itemLabel = "Spanish"/>
+                                <f:selectItem itemValue="zh-CN" itemLabel = "Chinese (Simplified)"/>
+                                <f:selectItem itemValue="zh-TW" itemLabel = "Chinese (Traditional)"/>
+                                <f:selectItem itemValue="HI" itemLabel = "Hindi"/>
+                                <f:selectItem itemValue="TE" itemLabel = "Telegu"/>
+                                <f:ajax id="langOptionsAjax" listener="#{language_MB.update()}" />
+                            </h:selectOneMenu>
+                        </h:form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">#{menu_MB.getFieldContent('modal','button1')}</button>
+                        <button type="button" onclick="ProcessLanguage();" class="btn btn-primary">#{menu_MB.getFieldContent('modal','button2')}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content" class="center_content">
+            <ui:insert name="content">
+
+            </ui:insert>
+        </div>
+        <!-- Bootstrap core JavaScript -->
+        <h:outputScript library="webjars" name="jquery/3.3.1-2/jquery.min.js"/>
+        <script src="../resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../resources/js/common.js"></script>
+    </h:body>
+
+</html>

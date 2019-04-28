@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+        <ui:composition template="../templates/masterTemplate.xhtml">
+            <ui:define name="content">
+                <!-- Masthead -->
+                <h:form id="lngForm">
+                    <h:commandButton id="translate" onclick="#{index_MB.translate(language_MB.language)}" value="" style="display: none"/>
+                </h:form>
+                <header class="masthead text-white text-center">
+                    <div class="overlay"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-9 mx-auto">
+                                <h1 class="mb-5">#{index_MB.getFieldContent('initalText')}</h1>
+                            </div>
+                            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                                <h:form id="indexForm">
+                                    <div class="row justify-content-center">
+                                        <div class="col-4">
+                                            <h:commandButton class="btn btn-block btn-lg btn-primary" value="#{index_MB.getFieldContent('button1')}" action="survey?faces-redirect=true"/>
+                                        </div>
+                                        <div class="col-4">
+                                            <h:commandButton class="btn btn-block btn-lg btn-primary" value="#{index_MB.getFieldContent('button2')}" action="selectComp?faces-redirect=true"/>
+                                        </div>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Icons Grid -->
+                <section id="main" class="features-icons bg-light text-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                                    <div class="features-icons-icon d-flex">
+                                        <i class="icon-target m-auto text-primary"></i>
+                                    </div>
+                                    <h3>#{index_MB.getFieldContent('title1')}</h3>
+                                    <p class="lead mb-0">#{index_MB.getFieldContent('content1')}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                                    <div class="features-icons-icon d-flex">
+                                        <i class="icon-docs m-auto text-primary"></i>
+                                    </div>
+                                    <h3>#{index_MB.getFieldContent('title2')}</h3>
+                                    <p class="lead mb-0">#{index_MB.getFieldContent('content2')}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                                    <div class="features-icons-icon d-flex">
+                                        <i class="icon-globe-alt m-auto text-primary"></i>
+                                    </div>
+                                    <h3>#{index_MB.getFieldContent('title3')}</h3>
+                                    <p class="lead mb-0">#{index_MB.getFieldContent('content3')}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Image Showcases -->
+                <section class="showcase">
+                    <div class="container-fluid p-0">
+                        <div class="row no-gutters">
+
+                            <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('../resources/img/bg-showcase-1.jpg');"></div>
+                            <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                                <h2>#{index_MB.getFieldContent('title4')}</h2>
+                                <p class="lead mb-0">#{index_MB.getFieldContent('content4')}</p>
+                            </div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-lg-6 text-white showcase-img" style="background-image: url('../resources/img/bg-showcase-2.jpg');"></div>
+                            <div class="col-lg-6 my-auto showcase-text">
+                                <h2>#{index_MB.getFieldContent('title5')}</h2>
+                                <p class="lead mb-0">#{index_MB.getFieldContent('content5')}</p>
+                            </div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('../resources/img/bg-showcase-3.jpg');"></div>
+                            <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                                <h2>#{index_MB.getFieldContent('title6')}</h2>
+                                <p class="lead mb-0">#{index_MB.getFieldContent('content6')}</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Testimonials -->
+                <section class="testimonials text-center bg-light">
+                    <div class="container">
+                        <h2 class="mb-5">#{index_MB.getFieldContent('title7')}</h2>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                                    <img class="img-fluid rounded-circle mb-3" src="../resources/img/testimonials-1.jpg" alt=""/>
+                                    <h5>#{index_MB.getFieldContent('title8')}</h5>
+                                    <p class="font-weight-light mb-0">"#{index_MB.getFieldContent('content8')}"</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                                    <img class="img-fluid rounded-circle mb-3" src="../resources/img/testimonials-2.jpg" alt=""/>
+                                    <h5>#{index_MB.getFieldContent('title9')}</h5>
+                                    <p class="font-weight-light mb-0">"#{index_MB.getFieldContent('content9')}"</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                                    <img class="img-fluid rounded-circle mb-3" src="../resources/img/testimonials-3.jpg" alt=""/>
+                                    <h5>#{index_MB.getFieldContent('title10')}</h5>
+                                    <p class="font-weight-light mb-0">"#{index_MB.getFieldContent('content10')}"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer -->
+                <footer class="footer bg-light">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+                                <ul class="list-inline mb-2">
+                                    <li class="list-inline-item">
+                                        <a href="#">#{index_MB.getFieldContent('link1')}</a>
+                                    </li>
+                                    <li class="list-inline-item">&sdot;</li>
+                                    <li class="list-inline-item">
+                                        <a href="#">#{index_MB.getFieldContent('link2')}</a>
+                                    </li>
+                                    <li class="list-inline-item">&sdot;</li>
+                                    <li class="list-inline-item">
+                                        <a href="#">#{index_MB.getFieldContent('link3')}</a>
+                                    </li>
+                                    <li class="list-inline-item">&sdot;</li>
+                                    <li class="list-inline-item">
+                                        <a href="#">#{index_MB.getFieldContent('link4')}</a>
+                                    </li>
+                                </ul>
+                                <p class="text-muted small mb-4 mb-lg-0">&copy; #{index_MB.getFieldContent('content11')}</p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

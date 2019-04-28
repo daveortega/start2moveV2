@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+        <ui:composition template="../templates/masterTemplate.xhtml">
+            <ui:define name="content">
+                <h:form id="lngForm">
+                    <h:commandButton id="translate" onclick="#{selectComparison_MB.translate(language_MB.language)}" value="" style="display: none"/>
+                </h:form>
+                <h:form id="selectPostCode">
+                    <div class="question">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <h1 class="display-4">#{selectComparison_MB.getFieldContent('intro','title')}</h1>
+                                <p class="lead">#{selectComparison_MB.getFieldContent('intro','explanation')}</p>
+                                <hr class="my-4"/>
+                                <p>#{selectComparison_MB.getFieldContent('intro','prefText')} </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="pref1" class="OneSelectPreferences" disabled="#{selectComparison_MB.activePreference1}" 
+                                                             value="#{selectComparison_MB.postCode1}"> 
+                                                <f:selectItem itemLabel="#{selectComparison_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{selectComparison_MB.listOfPostCode1}" var="pref1" 
+                                                               itemLabel="#{pref1}" itemValue="#{pref1.dbpostCodePK.postCodeId},#{pref1.dbpostCodePK.postCodeLine}"/>
+                                                <f:ajax listener="#{selectComparison_MB.processPreferences('one')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{selectComparison_MB.errorPreference1?'block':'none'}"
+                                               data-placement="top" title="#{selectComparison_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="pref2" class="OneSelectPreferences" disabled="#{selectComparison_MB.activePreference2}" 
+                                                             value="#{selectComparison_MB.postCode2}">
+                                                <f:selectItem itemLabel="#{selectComparison_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{selectComparison_MB.listOfPostCode2}" var="pref2" 
+                                                               itemLabel="#{pref2}" itemValue="#{pref2.dbpostCodePK.postCodeId},#{pref2.dbpostCodePK.postCodeLine}"/>
+                                                <f:ajax listener="#{selectComparison_MB.processPreferences('two')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{selectComparison_MB.errorPreference2?'block':'none'}"
+                                               data-placement="top" title="#{selectComparison_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="pref3" class="OneSelectPreferences" disabled="#{selectComparison_MB.activePreference3}" 
+                                                             value="#{selectComparison_MB.postCode3}">
+                                                <f:selectItem itemLabel="#{selectComparison_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{selectComparison_MB.listOfPostCode3}" var="pref3" 
+                                                               itemLabel="#{pref3}" itemValue="#{pref3.dbpostCodePK.postCodeId},#{pref3.dbpostCodePK.postCodeLine}"/>
+                                                <f:ajax listener="#{selectComparison_MB.processPreferences('three')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:commandLink class="btn-link" value="#{selectComparison_MB.getFieldContent('general','link')}" >
+                                                <f:ajax listener="#{selectComparison_MB.resetPreferences()}" render="@form"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="survey-button">
+                                    <h:commandButton class="btn btn-primary btn-lg" value="#{selectComparison_MB.getFieldContent('general','buttonCont')}">
+                                        <f:ajax listener="#{selectComparison_MB.savePreferences()}" render="@form"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

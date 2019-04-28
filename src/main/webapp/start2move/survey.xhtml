@@ -1,0 +1,573 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+        <ui:composition template="../templates/masterTemplate.xhtml">
+            <ui:define name="content">
+                <h:form id="lngForm">
+                    <h:commandButton id="translate" onclick="#{survey_MB.translate(language_MB.language)}" value="" style="display: none"/>
+                </h:form>
+                <h:form id="survey">
+                    <div class="question" style="display:#{survey_MB.enableInstructions?'block':'none'}">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <h1 class="display-4">#{survey_MB.getFieldContent('intro','title')}</h1>
+                                <p class="lead">#{survey_MB.getFieldContent('intro','explanation')}</p>
+                                <hr class="my-4"/>
+                                <p>#{survey_MB.getFieldContent('intro','prefText')} 
+                                    <i class="icon-info text-primary" data-placement="top" title="#{survey_MB.getFieldContent('intro','hint')}"></i>
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="pref1" class="OneSelectPreferences" disabled="#{survey_MB.activePreference1}" 
+                                                             value="#{survey_MB.preference1}"> 
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfPreferencesOne}" var="pref1" 
+                                                               itemLabel="#{pref1.prefName}" itemValue="#{pref1.prefName}"/>
+                                                <f:ajax listener="#{survey_MB.processPreferences('one')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.errorPreference1?'block':'none'}"
+                                                  data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="pref2" class="OneSelectPreferences" disabled="#{survey_MB.activePreference2}" 
+                                                             value="#{survey_MB.preference2}">
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfPreferencesTwo}" var="pref2" 
+                                                               itemLabel="#{pref2.prefName}" itemValue="#{pref2.prefName}"/>
+                                                <f:ajax listener="#{survey_MB.processPreferences('two')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.errorPreference2?'block':'none'}"
+                                               data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>                                       
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="pref3" class="OneSelectPreferences" disabled="#{survey_MB.activePreference3}" 
+                                                             value="#{survey_MB.preference3}"> 
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfPreferencesThree}" var="pref3" 
+                                                               itemLabel="#{pref3.prefName}" itemValue="#{pref3.prefName}"/>
+                                                <f:ajax listener="#{survey_MB.processPreferences('three')}" render="@form"/>
+                                            </h:selectOneMenu>                                            
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.errorPreference3?'block':'none'}"
+                                               data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}" />
+                                        </div>                                  
+                                        <div class="col-sm">
+                                            <h:commandLink class="btn-link" value="#{survey_MB.getFieldContent('general','link')}" >
+                                                <f:ajax listener="#{survey_MB.resetPreferences()}" render="@form"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="survey-button">
+                                    <h:commandButton class="btn btn-primary btn-lg" value="#{survey_MB.getFieldContent('general','buttonCont')}">
+                                        <f:ajax listener="#{survey_MB.savePreferences()}" render="@form"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <!-- bus stops -->
+                    <div class="question" style="display:#{survey_MB.enableBusStops?'block':'none'}">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <h1 class="display-4">#{survey_MB.getFieldContent('qBusStops','header')}</h1>
+                                <p class="lead">#{survey_MB.getFieldContent('qBusStops','explanation')}</p>
+                                <hr class="my-4"/>
+                                <p> #{survey_MB.getFieldContent('qBusStops','question')}
+                                    <i class="icon-info text-primary" data-placement="top" title="#{survey_MB.getFieldContent('qBusStops','hint')}" />
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="minBusStops" class="OneSelectPreferences" disabled="#{survey_MB.enableBusStopsRange1}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer1}"> 
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfBusStop1}" var="bus1" 
+                                                               itemLabel="#{bus1}" itemValue="#{bus1}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Bus Stops','BusListOne')}" render="@form"/>
+                                            </h:selectOneMenu>                                           
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableBusStopsError1?'block':'none'}"
+                                                  data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="MaxBusStops" class="OneSelectPreferences" disabled="#{survey_MB.enableBusStopsRange2}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer2}">
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfBusStop2}" var="bus2" 
+                                                               itemLabel="#{bus2}" itemValue="#{bus2}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Bus Stops','BusListTwo')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableBusStopsError2?'block':'none'}"
+                                               data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:commandLink class="btn-link" value="#{survey_MB.getFieldContent('general','link')}" >
+                                                <f:ajax listener="#{survey_MB.processQuestions('Bus Stops','Clean')}" render="@form"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="survey-button">
+                                    <div class="row">
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-secondary btn-lg" style="display:#{survey_MB.enableBusStopsBack?'block':'none'}"
+                                                             value="#{survey_MB.getFieldContent('general','buttonBack')}">
+                                                <f:ajax listener="#{survey_MB.savePreferences()}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-primary btn-lg" value="#{survey_MB.getFieldContent('general','buttonCont')}">
+                                                <f:ajax listener="#{survey_MB.surveyController('process', 'Bus Stops')}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- crime rate -->
+                    <div class="question" style="display:#{survey_MB.enableCrimeRate?'block':'none'}">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <h1 class="display-4">#{survey_MB.getFieldContent('qCrimeRate','header')}</h1>
+                                <p class="lead">#{survey_MB.getFieldContent('qCrimeRate','explanation')}</p>
+                                <hr class="my-4"/>
+                                <p> #{survey_MB.getFieldContent('qCrimeRate','question')}
+                                    <i class="icon-info text-primary" data-placement="top" title="#{survey_MB.getFieldContent('qCrimeRate','hint')}" />
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="minCrimeRate" class="OneSelectPreferences" disabled="#{survey_MB.enableCrimeRateRange1}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer1}"> 
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfCrimeRate1}" var="crime1" 
+                                                               itemLabel="#{crime1}" itemValue="#{crime1}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Crime Rate','CrimeListOne')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableCrimeRateError1?'block':'none'}"
+                                                  data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="maxCrimeRate" class="OneSelectPreferences" disabled="#{survey_MB.enableCrimeRateRange2}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer2}">
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfCrimeRate2}" var="crime2" 
+                                                               itemLabel="#{crime2}" itemValue="#{crime2}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Crime Rate','CrimeListTwo')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableCrimeRateError2?'block':'none'}"
+                                               data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:commandLink class="btn-link" value="#{survey_MB.getFieldContent('general','link')}" >
+                                                <f:ajax listener="#{survey_MB.processQuestions('Crime Rate','Clean')}" render="@form"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="survey-button">
+                                    <div class="row">
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-secondary btn-lg" style="display:#{survey_MB.enableCrimeRateBack?'block':'none'}"
+                                                             value="#{survey_MB.getFieldContent('general','buttonBack')}">
+                                                <f:ajax listener="#{survey_MB.savePreferences()}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-primary btn-lg" value="#{survey_MB.getFieldContent('general','buttonCont')}">
+                                                <f:ajax listener="#{survey_MB.surveyController('process', 'Crime Rate')}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- hospitals -->
+                    <div class="question" style="display:#{survey_MB.enableHospitals?'block':'none'}">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <h1 class="display-4">#{survey_MB.getFieldContent('qHospitals','header')}</h1>
+                                <p class="lead">#{survey_MB.getFieldContent('qHospitals','explanation')}</p>
+                                <hr class="my-4"/>
+                                <p> #{survey_MB.getFieldContent('qHospitals','question')}
+                                    <i class="icon-info text-primary" data-placement="top" title="#{survey_MB.getFieldContent('qHospitals','hint')}" />
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="minHospitals" class="OneSelectPreferences" disabled="#{survey_MB.enableHospitalsRange1}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer1}"> 
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfHospitals1}" var="hospital1" 
+                                                               itemLabel="#{hospital1}" itemValue="#{hospital1}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Hospitals','HospitalsListOne')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableHospitalsError1?'block':'none'}"
+                                                  data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="maxHospitals" class="OneSelectPreferences" disabled="#{survey_MB.enableHospitalsRange2}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer2}">
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfHospitals2}" var="hospital2" 
+                                                               itemLabel="#{hospital2}" itemValue="#{hospital2}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Hospitals','HospitalsListTwo')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableHospitalsError2?'block':'none'}"
+                                               data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:commandLink class="btn-link" value="#{survey_MB.getFieldContent('general','link')}" >
+                                                <f:ajax listener="#{survey_MB.processQuestions('Hospitals','Clean')}" render="@form"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="survey-button">
+                                    <div class="row">
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-secondary btn-lg" style="display:#{survey_MB.enableHospitalsBack?'block':'none'}"
+                                                             value="#{survey_MB.getFieldContent('general','buttonBack')}">
+                                                <f:ajax listener="#{survey_MB.savePreferences()}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-primary btn-lg" value="#{survey_MB.getFieldContent('general','buttonCont')}">
+                                                <f:ajax listener="#{survey_MB.surveyController('process', 'Hospitals')}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- schools -->
+                    <div class="question" style="display:#{survey_MB.enableSchools?'block':'none'}">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <h1 class="display-4">#{survey_MB.getFieldContent('qSchools','header')}</h1>
+                                <p class="lead">#{survey_MB.getFieldContent('qSchools','explanation')}</p>
+                                <hr class="my-4"/>
+                                <p> #{survey_MB.getFieldContent('qSchools','question')}
+                                    <i class="icon-info text-primary" data-placement="top" title="#{survey_MB.getFieldContent('qSchools','hint')}" />
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h:selectOneRadio id="minSchools" class="OneSelectRadio" disabled="#{survey_MB.enableSchoolsRange1}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer1}"> 
+                                                <f:selectItems value="#{survey_MB.listOfSchools1}" var="school1" 
+                                                               itemLabel="#{survey_MB.translateString(school1)}" itemValue="#{school1}" />
+                                                <f:ajax listener="#{survey_MB.processQuestions('Schools','BusListOne')}" render="@form"/>
+                                            </h:selectOneRadio>                                           
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableSchoolsError1?'block':'none'}"
+                                                  data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:commandLink class="btn-link" value="#{survey_MB.getFieldContent('general','link')}" >
+                                                <f:ajax listener="#{survey_MB.processQuestions('Schools','Clean')}" render="@form"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="survey-button">
+                                    <div class="row">
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-secondary btn-lg" style="display:#{survey_MB.enableSchoolsBack?'block':'none'}"
+                                                             value="#{survey_MB.getFieldContent('general','buttonBack')}">
+                                                <f:ajax listener="#{survey_MB.savePreferences()}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-primary btn-lg" value="#{survey_MB.getFieldContent('general','buttonCont')}">
+                                                <f:ajax listener="#{survey_MB.surveyController('process', 'Schools')}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- rent prices -->
+                    <div class="question" style="display:#{survey_MB.enableRealStateRent?'block':'none'}">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <h1 class="display-4">#{survey_MB.getFieldContent('qRealStateRent','header')}</h1>
+                                <p class="lead">#{survey_MB.getFieldContent('qRealStateRent','explanation')}</p>
+                                <hr class="my-4"/>
+                                <p> #{survey_MB.getFieldContent('qRealStateRent','question')}
+                                    <i class="icon-info text-primary" data-placement="top" title="#{survey_MB.getFieldContent('qRealStateRent','hint')}" />
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="minRealStateRent" class="OneSelectPreferences" disabled="#{survey_MB.enableRealStateRentRange1}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer1}"> 
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfRealStateRent1}" var="rent1" 
+                                                               itemLabel="#{rent1}" itemValue="#{rent1}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Rent Prices','RentPricesListOne')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableRealStateRentError1?'block':'none'}"
+                                                  data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="maxRealStateRent" class="OneSelectPreferences" disabled="#{survey_MB.enableRealStateRentRange2}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer2}">
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfRealStateRent2}" var="rent2" 
+                                                               itemLabel="#{rent2}" itemValue="#{rent2}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Rent Prices','RentPricesListTwo')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableRealStateRentError2?'block':'none'}"
+                                               data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:commandLink class="btn-link" value="#{survey_MB.getFieldContent('general','link')}" >
+                                                <f:ajax listener="#{survey_MB.processQuestions('Rent Prices','Clean')}" render="@form"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="survey-button">
+                                    <div class="row">
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-secondary btn-lg" style="display:#{survey_MB.enableRealStateRentBack?'block':'none'}"
+                                                             value="#{survey_MB.getFieldContent('general','buttonBack')}">
+                                                <f:ajax listener="#{survey_MB.savePreferences()}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-primary btn-lg" value="#{survey_MB.getFieldContent('general','buttonCont')}">
+                                                <f:ajax listener="#{survey_MB.surveyController('process', 'Rent Prices')}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- house prices -->
+                    <div class="question" style="display:#{survey_MB.enableRealStatePrices?'block':'none'}">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <h1 class="display-4">#{survey_MB.getFieldContent('qRealStateHouse','header')}</h1>
+                                <p class="lead">#{survey_MB.getFieldContent('qRealStateHouse','explanation')}</p>
+                                <hr class="my-4"/>
+                                <p> #{survey_MB.getFieldContent('qRealStateHouse','question')}
+                                    <i class="icon-info text-primary" data-placement="top" title="#{survey_MB.getFieldContent('qRealStateHouse','hint')}" />
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="minRealStatePrices" class="OneSelectPreferences" disabled="#{survey_MB.enableRealStatePricesRange1}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer1}"> 
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfRealStatePrices1}" var="house1" 
+                                                               itemLabel="#{house1}" itemValue="#{house1}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Real Estate Prices','BuyHouseListOne')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableRealStatePricesError1?'block':'none'}"
+                                                  data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="maxRealStatePrices" class="OneSelectPreferences" disabled="#{survey_MB.enableRealStatePricesRange2}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer2}">
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfRealStatePrices2}" var="house2" 
+                                                               itemLabel="#{house2}" itemValue="#{house2}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Real Estate Prices','BuyHouseListTwo')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableRealStatePricesError2?'block':'none'}"
+                                               data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:commandLink class="btn-link" value="#{survey_MB.getFieldContent('general','link')}" >
+                                                <f:ajax listener="#{survey_MB.processQuestions('Real Estate Prices','Clean')}" render="@form"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="survey-button">
+                                    <div class="row">
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-secondary btn-lg" style="display:#{survey_MB.enableRealStatePricesBack?'block':'none'}"
+                                                             value="#{survey_MB.getFieldContent('general','buttonBack')}">
+                                                <f:ajax listener="#{survey_MB.savePreferences()}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-primary btn-lg" value="#{survey_MB.getFieldContent('general','buttonCont')}">
+                                                <f:ajax listener="#{survey_MB.surveyController('process', 'Real Estate Prices')}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- land prices -->
+                    <div class="question" style="display:#{survey_MB.enableRealStateBuyLand?'block':'none'}">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <h1 class="display-4">#{survey_MB.getFieldContent('qRealStateLand','header')}</h1>
+                                <p class="lead">#{survey_MB.getFieldContent('qRealStateLand','explanation')}</p>
+                                <hr class="my-4"/>
+                                <p> #{survey_MB.getFieldContent('qRealStateLand','question')}
+                                    <i class="icon-info text-primary" data-placement="top" title="#{survey_MB.getFieldContent('qRealStateLand','hint')}" />
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="minRealStateBuyLand" class="OneSelectPreferences" disabled="#{survey_MB.enableRealStateBuyLandRange1}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer1}"> 
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfRealStateBuyLand1}" var="land1" 
+                                                               itemLabel="#{land1}" itemValue="#{land1}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Land Prices','BuyLandListOne')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableRealStateBuyLandError1?'block':'none'}"
+                                                  data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="maxRealStateBuyLand" class="OneSelectPreferences" disabled="#{survey_MB.enableRealStateBuyLandRange2}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer2}">
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfRealStateBuyLand2}" var="land2" 
+                                                               itemLabel="#{land2}" itemValue="#{land2}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Land Prices','BuyLandListTwo')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableRealStateBuyLandError2?'block':'none'}"
+                                               data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:commandLink class="btn-link" value="#{survey_MB.getFieldContent('general','link')}" >
+                                                <f:ajax listener="#{survey_MB.processQuestions('Land Prices','Clean')}" render="@form"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="survey-button">
+                                    <div class="row">
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-secondary btn-lg" style="display:#{survey_MB.enableRealStatePricesBack?'block':'none'}"
+                                                             value="#{survey_MB.getFieldContent('general','buttonBack')}">
+                                                <f:ajax listener="#{survey_MB.savePreferences()}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-primary btn-lg" value="#{survey_MB.getFieldContent('general','buttonCont')}">
+                                                <f:ajax listener="#{survey_MB.surveyController('process', 'Land Prices')}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- train stops -->
+                    <div class="question" style="display:#{survey_MB.enableTrainSations?'block':'none'}">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <h1 class="display-4">#{survey_MB.getFieldContent('qTrainStops','header')}</h1>
+                                <p class="lead">#{survey_MB.getFieldContent('qTrainStops','explanation')}</p>
+                                <hr class="my-4"/>
+                                <p> #{survey_MB.getFieldContent('qTrainStops','question')}
+                                    <i class="icon-info text-primary" data-placement="top" title="#{survey_MB.getFieldContent('qTrainStops','hint')}" />
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="minTrainSations" class="OneSelectPreferences" disabled="#{survey_MB.enableTrainSationsRange1}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer1}"> 
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfTrainSations1}" var="train1" 
+                                                               itemLabel="#{train1}" itemValue="#{train1}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Train Stations','TrainStopsListOne')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableTrainSationsError1?'block':'none'}"
+                                                  data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="maxTrainSations" class="OneSelectPreferences" disabled="#{survey_MB.enableTrainSationsRange2}" 
+                                                             value="#{survey_MB.currentQuestion.questionAnswer2}">
+                                                <f:selectItem itemLabel = "#{survey_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{survey_MB.listOfTrainSations2}" var="train2" 
+                                                               itemLabel="#{train2}" itemValue="#{train2}"/>
+                                                <f:ajax listener="#{survey_MB.processQuestions('Train Stations','TrainStopsListTwo')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <i class="icon-close text-danger" style="display:#{survey_MB.enableTrainSationsError2?'block':'none'}"
+                                               data-placement="top" title="#{survey_MB.getFieldContent('general','error1')}"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <h:commandLink class="btn-link" value="#{survey_MB.getFieldContent('general','link')}" >
+                                                <f:ajax listener="#{survey_MB.processQuestions('Train Stations','Clean')}" render="@form"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="survey-button">
+                                    <div class="row">
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-secondary btn-lg" style="display:#{survey_MB.enableRealStatePricesBack?'block':'none'}"
+                                                             value="#{survey_MB.getFieldContent('general','buttonBack')}">
+                                                <f:ajax listener="#{survey_MB.savePreferences()}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                        <div class="logo-div">
+                                            <h:commandButton class="btn btn-primary btn-lg" value="#{survey_MB.getFieldContent('general','buttonCont')}">
+                                                <f:ajax listener="#{survey_MB.surveyController('process', 'Train Stations')}" render="@form"/>
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

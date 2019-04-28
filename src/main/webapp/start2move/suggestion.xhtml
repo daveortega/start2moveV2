@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+        <ui:composition template="../templates/masterTemplate.xhtml">
+            <ui:define name="content">
+                <h:form id="lngForm">
+                    <h:commandButton id="translate" onclick="#{suggestion_MB.translate(language_MB.language)}" value="" style="display: none"/>
+                </h:form>
+                <h:form id="suggestion">
+                    <div class="question" style="display:#{suggestion_MB.showMainTable?'block':'none'}">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <h1 class="display-4">#{suggestion_MB.getFieldContent('main','title')}</h1>
+                                <p class="lead">#{suggestion_MB.getFieldContent('main','explanation')}</p>
+                                <hr class="my-4"/>
+                                <div class="container">
+                                    <h:dataTable value="#{suggestion_MB.listOfSuggestions}" var="s"
+                                                 class="table"
+                                                 headerClass="table-primary"
+                                                 rowClasses="order-table-odd-row,order-table-even-row">
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('main','column0')}</f:facet>
+                                            <h:selectBooleanCheckbox value="#{s.checked}">
+                                                <f:ajax listener="#{suggestion_MB.enableComparison()}" render="@form"/>
+                                            </h:selectBooleanCheckbox>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('main','column1')}</f:facet>
+                                                #{s.postCode}
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('main','column2')}</f:facet>
+                                                #{s.postCodeName}
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.header1}</f:facet>
+                                                #{s.questionOneAnswer}
+                                        </h:column>
+
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.header2}</f:facet>
+                                                #{s.questionTwoAnswer}
+                                        </h:column>
+
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.header3}</f:facet>
+                                                #{s.questionThreeAnswer}
+                                        </h:column>
+
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('main','action')}</f:facet>
+                                            <h:commandButton class="btn btn-primary" value="#{suggestion_MB.getFieldContent('main','button')}">
+                                                <f:ajax listener="#{suggestion_MB.processItem(s)}" render="@form"/>
+                                            </h:commandButton>
+                                        </h:column>
+                                    </h:dataTable>
+                                </div>
+                                <div class="survey-button">
+                                    <h:commandButton class="btn btn-lg #{suggestion_MB.enableComparison ? 'btn-secondary' : 'btn-primary'}" 
+                                                     disabled="#{suggestion_MB.enableComparison}"
+                                                     value="#{suggestion_MB.getFieldContent('main','column0')}">
+                                        <f:ajax listener="#{suggestion_MB.comparePostCodes()}" render="@form"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>                           
+                        </div> 
+                    </div>
+                    <div class="result" style="display:#{suggestion_MB.showResults?'block':'none'}">
+                        <div class="container">
+                            <div class="resultBox">
+                                <h3>#{suggestion_MB.getFieldContent('main','column1')}: #{suggestion_MB.currenItem.postCode} (#{suggestion_MB.currenItem.postCodeName})</h3>
+                            </div>
+                            <div class="resultBox">
+                                <div class="resultBoxHeader">
+                                    <span class="h4 text-primary">#{suggestion_MB.getFieldContent('result','education')}: 
+                                        <small class="text-muted">#{suggestion_MB.getFieldContent('result','schoolsNo')} #{suggestion_MB.currenItem.postCodeName} 
+                                            #{suggestion_MB.getFieldContent('result','is')} #{suggestion_MB.listOfSchools.size()} 
+                                        </small>
+                                    </span> 
+                                </div>
+                                <div class="resultBoxResult">
+                                    <h:dataTable value="#{suggestion_MB.listOfSchools}" var="sch"
+                                                 class="table"
+                                                 headerClass=""
+                                                 rowClasses="order-table-odd-row,order-table-even-row">
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('result','schoolTable1')}</f:facet>
+                                                #{sch.schoolName}
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('result','schoolTable2')}</f:facet>
+                                                #{sch.schoolType}
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('result','schoolTable3')}</f:facet>
+                                                #{sch.address}
+                                        </h:column>
+                                    </h:dataTable>
+                                </div>
+                            </div>
+                            <div class="resultBox">
+                                <div class="resultBoxHeader">
+                                    <span class="h4 text-primary">#{suggestion_MB.getFieldContent('result','crimeRate')}
+                                        <small class="text-muted">#{suggestion_MB.getFieldContent('result','crimeRateExp')}</small>
+                                    </span> 
+                                </div>
+                                <div class="resultBoxResult">
+                                    <div class="row">
+                                        <div class="col-6 col-md-4">
+                                            <span class="h6">#{suggestion_MB.getFieldContent('result','crimeRateInf')}: #{suggestion_MB.crimeAvg} </span>
+                                        </div>
+                                        <div class="col-12 col-md-8">
+                                            <canvas id="crimeChart"></canvas>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="resultBox">
+                                <div class="resultBoxHeader">
+                                    <span class="h4 text-primary">#{suggestion_MB.getFieldContent('result','health')} 
+                                        <small class="text-muted">#{suggestion_MB.getFieldContent('result','hospitalsNo')} #{suggestion_MB.currenItem.postCodeName} 
+                                            #{suggestion_MB.getFieldContent('result','is')} #{suggestion_MB.listOfHospitals.size()}
+                                        </small>
+                                    </span> 
+                                </div>
+                                <div class="resultBoxResult">
+                                    <h:dataTable value="#{suggestion_MB.listOfHospitals}" var="hos"
+                                                 class="table"
+                                                 headerClass=""
+                                                 rowClasses="order-table-odd-row,order-table-even-row">
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('result','hospitalTable1')}</f:facet>
+                                                #{hos.labelName}
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('result','hospitalTable2')}</f:facet>
+                                                #{hos.type}
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('result','hospitalTable3')}</f:facet>
+                                                #{hos.street}  #{hos.roadName}
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('result','hospitalTable4')}</f:facet>
+                                                #{hos.campusCode}
+                                        </h:column>
+                                    </h:dataTable>
+                                </div>
+                            </div>
+                            <div class="resultBox">
+                                <div class="resultBoxHeader">
+                                    <span class="h4 text-primary">#{suggestion_MB.getFieldContent('result','realEstate')}: 
+                                        <small class="text-muted">#{suggestion_MB.getFieldContent('result','realEstateExp')}
+                                            #{suggestion_MB.currenItem.postCodeName}
+                                        </small>
+                                    </span>
+                                </div>
+                                <div class="resultBoxResult">
+                                    <div class="row">
+                                        <div class="col-sm" style="display:#{suggestion_MB.rentChart?'block':'none'}">
+                                            <h6>#{suggestion_MB.getFieldContent('result','rentPrices')}</h6>                                             
+                                        </div>
+                                        <div class="col-sm" style="display:#{suggestion_MB.realChart?'block':'none'}">
+                                            <h6>#{suggestion_MB.getFieldContent('result','realPrices')}</h6>
+                                        </div>
+                                        <div class="col-sm" style="display:#{suggestion_MB.landChart?'block':'none'}">
+                                            <h6>#{suggestion_MB.getFieldContent('result','landPrices')}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm" style="display:#{suggestion_MB.rentChart?'block':'none'}">
+                                            <canvas id="rentChart"></canvas>
+                                        </div>
+                                        <div class="col-sm" style="display:#{suggestion_MB.realChart?'block':'none'}">
+                                            <canvas id="realEstateChart"></canvas>
+                                        </div>
+                                        <div class="col-sm" style="display:#{suggestion_MB.landChart?'block':'none'}">
+                                            <canvas id="LandChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="resultBox">
+                                <div class="resultBoxResult">
+                                    <span class="h4 text-primary">#{suggestion_MB.getFieldContent('result','transportation')} 
+                                        <small class="text-muted">
+                                            #{suggestion_MB.getFieldContent('result','thereAre')} #{suggestion_MB.listOfTrains.size()} 
+                                            #{suggestion_MB.getFieldContent('result','transExp1')} #{suggestion_MB.listOfBus.size()} 
+                                            #{suggestion_MB.getFieldContent('result','transExp2')} #{suggestion_MB.currenItem.postCodeName}
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="back-button">
+                                <h:commandButton class="btn btn-secondary btn-lg" value="#{suggestion_MB.getFieldContent('result','buttonBack')}">
+                                    <f:ajax listener="#{suggestion_MB.backToList()}" render="@form"/>
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

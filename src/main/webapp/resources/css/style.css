@@ -1,0 +1,78 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 02/04/2019, 7:46:52 PM
+    Author     : davidortega
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body {
+    padding-bottom: 10px;
+}
+
+surveyBox {
+    width: 320px;
+    padding: 10px;
+    border: 5px solid gray;
+    margin: 0; 
+}
+
+#login-messages_container .ui-growl-item-container {
+    background: #97C7C9;
+    color: white;
+    text-align: center;
+    padding-top: 4px;
+    font-size: 14px;
+}
+
+#login-messages_container p {
+    display:none;
+}
+
+#login-messages_container .ui-growl-title {
+    padding: 0;
+}
+
+.login-btn {
+    width: 100%; 
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.input-dropdown {
+    margin-right: 20px;
+}
+
+.vertical-center {
+    min-height: 80%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 80vh; /* These two lines are counted as one :-)       */
+
+    display: flex;
+    align-items: center;
+}
+
+.bg-primary-light {
+    background-color: #3A99FC !important;
+}
+
+.input-group > :not(:last-child).form-control, .input-group > :not(:last-child).custom-select {
+    border-top-right-radius: 0.25rem !important; 
+    border-bottom-right-radius: 0.25rem !important;
+}
+
+.input-group-text {
+    display: block !important;
+    text-align: center;
+}
+
+.mb-3 {
+    margin-top: 1rem;
+}
+
+.ui-widget, .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-family: "Roboto", "sans-serif"
+}
