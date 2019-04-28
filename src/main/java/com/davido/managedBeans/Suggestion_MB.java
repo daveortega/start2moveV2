@@ -309,7 +309,7 @@ public class Suggestion_MB implements Serializable {
         listOfRent = dbhouseRentFacade.findByPostcodeAndLine(item.getPostCode(), item.getPostCodeLine());
         if (!listOfRent.isEmpty()) {
             rentChart = true;
-            String Label = translateString("Rent Prices");
+            String Label = translateString("Rent Prices/week");
             String[] Labels = listOfRent.stream().map(h -> h[2].toString()).toArray(String[]::new);
             String[] Values = listOfRent.stream().map(h -> h[3].toString()).toArray(String[]::new);
             callJavaScript("rentChart", Label, Labels, Values);
@@ -319,7 +319,7 @@ public class Suggestion_MB implements Serializable {
         listOfRealEstate = dbhouseBuyingFacade.findByPostcodeAndLine(item.getPostCode(), item.getPostCodeLine());
         if (!listOfRealEstate.isEmpty()) {
             realChart = true;
-            String Label = translateString("Real Estate Prices");
+            String Label = translateString("Avg. Real Estate Prices");
             String[] Labels = listOfRealEstate.stream().map(h -> h[2].toString()).toArray(String[]::new);
             String[] Values = listOfRealEstate.stream().map(h -> h[3].toString()).toArray(String[]::new);
             callJavaScript("realEstateChart", Label, Labels, Values);
@@ -329,7 +329,7 @@ public class Suggestion_MB implements Serializable {
         listOfLandPrices = dblandPriceFacade.findByPostcodeAndLine(item.getPostCode(), item.getPostCodeLine());
         if (!listOfLandPrices.isEmpty()) {
             landChart = true;
-            String Label = translateString("Land Prices");
+            String Label = translateString("Avg. Land Prices");
             String[] Labels = listOfLandPrices.stream().map(h -> h[2].toString()).toArray(String[]::new);
             String[] Values = listOfLandPrices.stream().map(h -> h[3].toString()).toArray(String[]::new);
             callJavaScript("LandChart", Label, Labels, Values);
