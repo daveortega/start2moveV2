@@ -82,13 +82,30 @@
                     </div>
                     <div class="modal-body">
                         <h:form id="modalForm">
-                            <h:selectOneMenu id="langOptions" binding="#{lang}" value="#{language_MB.language}"> 
-                                <f:selectItem itemValue="EN" itemLabel = "English"/> 
-                                <f:selectItem itemValue="ES" itemLabel = "Spanish"/>
+                            <h:selectOneMenu id="langOptions" binding="#{lang}" value="#{language_MB.language}">
+                                <f:selectItem itemValue="ar" itemLabel = "Arabic"/>
+                                <f:selectItem itemValue="bg" itemLabel = "Bulgarian"/>
                                 <f:selectItem itemValue="zh-CN" itemLabel = "Chinese (Simplified)"/>
                                 <f:selectItem itemValue="zh-TW" itemLabel = "Chinese (Traditional)"/>
+                                <f:selectItem itemValue="hr" itemLabel = "Croatian"/>
+                                <f:selectItem itemValue="nl" itemLabel = "Dutch"/>
+                                <f:selectItem itemValue="fr" itemLabel = "French"/>
+                                <f:selectItem itemValue="de" itemLabel = "German"/>
+                                <f:selectItem itemValue="el" itemLabel = "Greek"/>
+                                <f:selectItem itemValue="EN" itemLabel = "English"/> 
                                 <f:selectItem itemValue="HI" itemLabel = "Hindi"/>
+                                <f:selectItem itemValue="id" itemLabel = "Indonesian"/>
+                                <f:selectItem itemValue="it" itemLabel = "Italian"/>
+                                <f:selectItem itemValue="ja" itemLabel = "Japanese"/>
+                                <f:selectItem itemValue="ko" itemLabel = "Korean"/>
+                                <f:selectItem itemValue="ne" itemLabel = "Nepali"/>
+                                <f:selectItem itemValue="fa" itemLabel = "Persian"/>
+                                <f:selectItem itemValue="ro" itemLabel = "Romanian"/>
+                                <f:selectItem itemValue="ru" itemLabel = "Russian"/>
+                                <f:selectItem itemValue="ES" itemLabel = "Spanish"/>
                                 <f:selectItem itemValue="TE" itemLabel = "Telegu"/>
+                                <f:selectItem itemValue="tr" itemLabel = "Turkish"/>
+                                <f:selectItem itemValue="vi" itemLabel = "Vietnamese"/>
                                 <f:ajax id="langOptionsAjax" listener="#{language_MB.update()}" />
                             </h:selectOneMenu>
                         </h:form>
