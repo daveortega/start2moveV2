@@ -50,13 +50,18 @@
                                             <f:facet name="header">#{suggestion_MB.header3}</f:facet>
                                                 #{s.questionThreeAnswer}
                                         </h:column>
-
                                         <h:column>
                                             <f:facet name="header">#{suggestion_MB.getFieldContent('main','action')}</f:facet>
                                             <h:commandButton class="btn btn-primary" value="#{suggestion_MB.getFieldContent('main','button')}">
                                                 <f:ajax listener="#{suggestion_MB.processItem(s)}" render="@form"/>
                                             </h:commandButton>
                                         </h:column>
+                                        <h:column>
+                                            <f:facet name="header">#{suggestion_MB.getFieldContent('main','action1')}</f:facet>
+                                            <h:commandButton class="btn btn-success" value="#{suggestion_MB.getFieldContent('main','button1')}">
+                                                <f:ajax listener="#{suggestion_MB.predictItem(s)}" render="@form"/>
+                                            </h:commandButton>
+                                        </h:column>                                        
                                     </h:dataTable>
                                 </div>
                                 <div class="survey-button">
@@ -72,7 +77,8 @@
                     <div class="result" style="display:#{suggestion_MB.showResults?'block':'none'}">
                         <div class="container">
                             <div class="resultBox">
-                                <h3>#{suggestion_MB.getFieldContent('main','column1')}: #{suggestion_MB.currenItem.postCode} (#{suggestion_MB.currenItem.postCodeName})</h3>
+                                <h3>#{suggestion_MB.getFieldContent('result','area')}: #{suggestion_MB.currenItem.postCodeName}</h3>
+                                <h3>#{suggestion_MB.getFieldContent('main','column1')}: #{suggestion_MB.currenItem.postCode}</h3>
                             </div>
                             <div class="resultBox">
                                 <div class="resultBoxHeader">
@@ -104,7 +110,7 @@
                             </div>
                             <div class="resultBox">
                                 <div class="resultBoxHeader">
-                                    <span class="h4 text-primary">#{suggestion_MB.getFieldContent('result','crimeRate')}
+                                    <span class="h4 text-primary">#{suggestion_MB.getFieldContent('result','crimeRate')}:
                                         <small class="text-muted">#{suggestion_MB.getFieldContent('result','crimeRateExp')}</small>
                                     </span> 
                                 </div>
@@ -121,7 +127,7 @@
                             </div>
                             <div class="resultBox">
                                 <div class="resultBoxHeader">
-                                    <span class="h4 text-primary">#{suggestion_MB.getFieldContent('result','health')} 
+                                    <span class="h4 text-primary">#{suggestion_MB.getFieldContent('result','health')}:
                                         <small class="text-muted">#{suggestion_MB.getFieldContent('result','hospitalsNo')} #{suggestion_MB.currenItem.postCodeName} 
                                             #{suggestion_MB.getFieldContent('result','is')} #{suggestion_MB.listOfHospitals.size()}
                                         </small>

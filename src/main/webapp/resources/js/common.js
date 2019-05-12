@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 function ProcessLanguage() {
     document.getElementById("lngMenuForm:translateMenu").click();
     document.getElementById("lngForm:translate").click();
@@ -63,6 +64,130 @@ function Process2BarChart(JSObject, Label1, Label2, Labels, Values1, Values2) {
                 yAxes: [{
                         ticks: {
                             beginAtZero: true
+                        }
+                    }]
+            }
+        }
+    });
+}
+
+function Process3BarChart(JSObject, Labels, DataSet1, DataSet2, BooD3, DataSet3, yAxisMax, stepSize) {
+    var LabelsArray = Labels.split(",");
+    var datasets;
+
+    if (BooD3 === 'true') {
+        datasets = [JSON.parse(DataSet1), JSON.parse(DataSet2), JSON.parse(DataSet3)];
+    } else {
+        datasets = [JSON.parse(DataSet1), JSON.parse(DataSet2)];
+    }
+
+    new Chart(document.getElementById(JSObject), {
+        type: 'bar',
+        data: {
+            labels: LabelsArray,
+            datasets
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: parseInt(yAxisMax, 10),
+                            stepSize: parseInt(stepSize, 10)
+                        }
+                    }]
+            }
+        }
+    });
+}
+
+function Process3BarChartCheck(JSObject, Labels, BooD1, DataSet1, BooD2, DataSet2, BooD3, DataSet3, yAxisMax, stepSize) {
+    var LabelsArray = Labels.split(",");
+    var datasets;
+
+    if (BooD1 === 'true' && BooD2 === 'true' && BooD3 === 'true') {
+        datasets = [JSON.parse(DataSet1), JSON.parse(DataSet2), JSON.parse(DataSet3)];
+    } else if (BooD1 === 'true' && BooD2 === 'true') {
+        datasets = [JSON.parse(DataSet1), JSON.parse(DataSet2)];
+    } else if (BooD1 === 'true' && BooD3 === 'true') {
+        datasets = [JSON.parse(DataSet1), JSON.parse(DataSet3)];
+    } else if (BooD2 === 'true' && BooD3 === 'true') {
+        datasets = [JSON.parse(DataSet2), JSON.parse(DataSet3)];
+    }
+
+    new Chart(document.getElementById(JSObject), {
+        type: 'bar',
+        data: {
+            labels: LabelsArray,
+            datasets
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: parseInt(yAxisMax, 10),
+                            stepSize: parseInt(stepSize, 10)
+                        }
+                    }]
+            }
+        }
+    });
+}
+
+function Process3BarHoChart(JSObject, Labels, DataSet1, DataSet2, BooD3, DataSet3, yAxisMax, stepSize) {
+    var LabelsArray = Labels.split(",");
+    var datasets;
+
+    if (BooD3 === 'true') {
+        datasets = [JSON.parse(DataSet1), JSON.parse(DataSet2), JSON.parse(DataSet3)];
+    } else {
+        datasets = [JSON.parse(DataSet1), JSON.parse(DataSet2)];
+    }
+
+    new Chart(document.getElementById(JSObject), {
+        type: 'horizontalBar',
+        data: {
+            labels: LabelsArray,
+            datasets
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: parseInt(yAxisMax, 10),
+                            stepSize: parseInt(stepSize, 10)
+                        }
+                    }]
+            }
+        }
+    });
+}
+
+function Process3LineChart(JSObject, Labels, DataSet1, DataSet2, BooD3, DataSet3, yAxisMax, stepSize) {
+    var LabelsArray = Labels.split(",");
+    var datasets;
+
+    if (BooD3 === 'true') {
+        datasets = [JSON.parse(DataSet1), JSON.parse(DataSet2), JSON.parse(DataSet3)];
+    } else {
+        datasets = [JSON.parse(DataSet1), JSON.parse(DataSet2)];
+    }
+
+    new Chart(document.getElementById(JSObject), {
+        type: 'line',
+        data: {
+            labels: LabelsArray,
+            datasets
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: parseInt(yAxisMax, 10),
+                            stepSize: parseFloat(stepSize)
                         }
                     }]
             }

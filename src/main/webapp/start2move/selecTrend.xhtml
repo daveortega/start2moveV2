@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+        <ui:composition template="../templates/masterTemplate.xhtml">
+            <ui:define name="content">
+                <h:form id="lngForm">
+                    <h:commandButton id="translate" onclick="#{selectTrend_MB.translate(language_MB.language)}" value="" style="display: none"/>
+                </h:form>
+                <h:form id="selectTrend">
+                    <div class="question">
+                        <div class="jumbotron d-flex align-items-center">
+                            <div class="container">
+                                <div class="alert alert-danger" role="alert" style="display:#{selectTrend_MB.errorPreference1?'block':'none'}">
+                                    <div>
+                                        #{selectTrend_MB.getFieldContent('general','error1')}
+                                    </div>
+                                </div>
+                                <h1 class="display-4">#{selectTrend_MB.getFieldContent('intro','title')}</h1>
+                                <p class="lead">#{selectTrend_MB.getFieldContent('intro','explanation')}</p>
+                                <hr class="my-4"/>
+                                <p>#{selectTrend_MB.getFieldContent('intro','prefText')} </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <h:selectOneMenu id="pref1" class="OneSelectPreferences" value="#{selectTrend_MB.postCode1}" > 
+                                                <f:selectItem itemLabel="#{selectTrend_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{selectTrend_MB.listOfPostCode1}" var="pref1" 
+                                                               itemLabel="#{pref1}" itemValue="#{pref1.dbpostCodePK.postCodeId},#{pref1.dbpostCodePK.postCodeLine}"/>
+                                                <f:ajax listener="#{selectTrend_MB.processPreferences('one')}" render="@form"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="survey-button">
+                                    <h:commandButton class="btn btn-primary btn-lg" value="#{selectTrend_MB.getFieldContent('general','buttonCont')}">
+                                        <f:ajax listener="#{selectTrend_MB.savePreferences()}" render="@form"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+
+

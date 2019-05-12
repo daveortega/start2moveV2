@@ -838,9 +838,9 @@ public class Survey_MB implements Serializable {
                         enableRealStateRentRange1 = false;
                         enableRealStateRentRange2 = true;
                         listOfRealStateRent1 = new ArrayList<>();
-                        dbhouseRentFacade.findHouseRentPostCode().forEach((Object tmp) -> {
-                            listOfRealStateRent1.add(tmp.toString());
-                        });
+                        List<Object[]> tmpList = dbhouseRentFacade.findHouseRentPostCode();
+                        listOfRealStateRent1 = createNormalizedList( Integer.parseInt(((Object) tmpList.get(0)).toString()), 
+                                Integer.parseInt(((Object) tmpList.get(tmpList.size() - 1)).toString()), 10, 10);
                         break;
                     case "Real Estate Prices":
                         enableRealStatePrices = true;
@@ -848,9 +848,9 @@ public class Survey_MB implements Serializable {
                         enableRealStatePricesRange1 = false;
                         enableRealStatePricesRange2 = true;
                         listOfRealStatePrices1 = new ArrayList<>();
-                        dbhouseBuyingFacade.findHouseBuyPostCode().forEach((Object tmp) -> {
-                            listOfRealStatePrices1.add(tmp.toString());
-                        });
+                        List<Object[]> tmpList1 = dbhouseBuyingFacade.findHouseBuyPostCode();
+                        listOfRealStatePrices1 = createNormalizedList( Integer.parseInt(((Object) tmpList1.get(0)).toString()), 
+                                Integer.parseInt(((Object) tmpList1.get(tmpList1.size() - 1)).toString()), 10000, 20000);
                         break;
                     case "Land Prices":
                         enableRealStateBuyLand = true;
@@ -858,9 +858,9 @@ public class Survey_MB implements Serializable {
                         enableRealStateBuyLandRange1 = false;
                         enableRealStateBuyLandRange2 = true;
                         listOfRealStateBuyLand1 = new ArrayList<>();
-                        dblandPriceFacade.findBuyLandPostCode().forEach((Object tmp) -> {
-                            listOfRealStateBuyLand1.add(tmp.toString());
-                        });
+                        List<Object[]> tmpList2 = dblandPriceFacade.findBuyLandPostCode();
+                        listOfRealStateBuyLand1 = createNormalizedList( Integer.parseInt(((Object) tmpList2.get(0)).toString()), 
+                                Integer.parseInt(((Object) tmpList2.get(tmpList2.size() - 1)).toString()), 10000, 20000);
                         break;
                     case "Train Stations":
                         enableTrainSations = true;
@@ -1366,6 +1366,18 @@ public class Survey_MB implements Serializable {
             currentList.add(databaseList.get(0));
         }
         return String.join(",", currentList);
+    }
+    
+    private List<String> createNormalizedList(int begin, int end, int base, int step){
+        List<String> resultantList = new ArrayList<>();
+        int secondNumber = (int) Math.ceil((double) (begin / base)) * base;
+        int seconLastNumber = (int) Math.floor((double) (end / base)) * base;
+        resultantList.add(Integer.toString(begin));
+        for (int i = secondNumber; i < seconLastNumber; i += step) {
+            resultantList.add(Integer.toString(i));
+        }
+        resultantList.add(Integer.toString(end));
+        return resultantList;
     }
 
 }

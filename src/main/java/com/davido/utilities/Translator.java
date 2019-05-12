@@ -28,7 +28,7 @@ public class Translator {
                 GoogleNetHttpTransport.newTrustedTransport(),
                 GsonFactory.getDefaultInstance(), null)
                 // Set your application name
-                .setApplicationName("Stackoverflow-Example")
+                .setApplicationName("Start2Move")
                 .build();
         Translate.Translations.List list = t.new Translations().list(
                 Arrays.asList(

@@ -38,7 +38,8 @@ public class DbpostCodeFacade extends AbstractFacade<DbpostCode> implements Dbpo
         List<DbpostCode> resultantList = new ArrayList<>();
         try {
             querySTR = "FROM DbpostCode p "
-                    + "WHERE p.dbpostCodePK.postCodeId NOT BETWEEN '3000' AND '3207' ";
+                    + "WHERE p.dbpostCodePK.postCodeId NOT BETWEEN '3000' AND '3207' "
+                    + "ORDER BY p.postCodeName";
             Query query = em.createQuery(querySTR);
             resultantList = query.getResultList();
         } catch (Exception e) {

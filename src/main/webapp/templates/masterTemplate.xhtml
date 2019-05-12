@@ -24,7 +24,9 @@
         <!-- Custom styles for this template -->
         <link href="../resources/css/landing-page.min.css" rel="stylesheet" />
         <link href="../resources/css/landing-page.css" rel="stylesheet" />
+        <link rel="shortcut icon" href="../resources/img/favicon.ico" type="image/x-icon"/>
         <script src="../resources/js/Chart.js"></script>
+        <!-- <script src="../resources/js/chartjs-plugin-datalabels.js"></script> -->
     </h:head>
 
     <h:body>
@@ -49,7 +51,7 @@
                                     <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link1')}" outcome="index" />
                                     <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link2')}" outcome="survey" />
                                     <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link3')}" outcome="selectComp"/>
-                                    <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link4')}" outcome="construction"/>
+                                    <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link4')}" outcome="selecTrend"/>
                                 </nav>
                                 <div class="logo-div">
                                     <h:commandButton value="#{menu_MB.getFieldContent('navbar','button')}" 

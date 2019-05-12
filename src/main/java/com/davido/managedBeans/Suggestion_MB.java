@@ -370,5 +370,17 @@ public class Suggestion_MB implements Serializable {
             Logger.getLogger(Survey_MB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    // This method call the trend page for the selected item
+    public void predictItem(resultantItem item) {
+        comparisonItem itemToTrend = new comparisonItem(item.getPostCode(), item.getPostCodeLine() ,item.getPostCodeName(), "suggestion");
+        // Create the list session variable and redirect
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("trendPostCode", itemToTrend);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("trend.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(Survey_MB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

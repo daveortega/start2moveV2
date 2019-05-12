@@ -26,7 +26,7 @@ import javax.faces.context.FacesContext;
  */
 @Named(value = "construction_MB")
 @RequestScoped
-public class construction_MB {
+public class Construction_MB {
     
     @EJB
     private DbViewFacadeLocal dbViewFacade;
@@ -41,7 +41,7 @@ public class construction_MB {
     /**
      * Creates a new instance of construction_MB
      */
-    public construction_MB() {
+    public Construction_MB() {
     }
     
     @PostConstruct

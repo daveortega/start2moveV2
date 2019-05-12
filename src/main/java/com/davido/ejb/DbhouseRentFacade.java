@@ -37,7 +37,7 @@ public class DbhouseRentFacade extends AbstractFacade<DbhouseRent> implements Db
         String querySTR;
         List<Object[]> resultantList = new ArrayList<>();
         try {
-            querySTR = "SELECT ROUND(AVG(a.houseRentPrice)) "
+            querySTR = "SELECT DISTINCT ROUND(AVG(a.houseRentPrice)) "
                     + "FROM db_houseRent a, db_postCode b "
                     + "WHERE a.postCode = b.postCodeId "
                     + "AND a.postLine = b.postCodeLine "

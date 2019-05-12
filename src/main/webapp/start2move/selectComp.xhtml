@@ -14,6 +14,12 @@
                     <div class="question">
                         <div class="jumbotron d-flex align-items-center">
                             <div class="container">
+                                <div class="alert alert-danger" role="alert" style="display:#{selectComparison_MB.errorPreference1 || 
+                                                                                              selectComparison_MB.errorPreference2?'block':'none'}">
+                                    <div>
+                                        #{selectComparison_MB.getFieldContent('general','error1')}
+                                    </div>
+                                </div>
                                 <h1 class="display-4">#{selectComparison_MB.getFieldContent('intro','title')}</h1>
                                 <p class="lead">#{selectComparison_MB.getFieldContent('intro','explanation')}</p>
                                 <hr class="my-4"/>
@@ -22,16 +28,12 @@
                                     <div class="row">
                                         <div class="col-sm">
                                             <h:selectOneMenu id="pref1" class="OneSelectPreferences" disabled="#{selectComparison_MB.activePreference1}" 
-                                                             value="#{selectComparison_MB.postCode1}"> 
+                                                             value="#{selectComparison_MB.postCode1}" > 
                                                 <f:selectItem itemLabel="#{selectComparison_MB.getFieldContent('intro','NoOption')}" noSelectionOption="true"/>
                                                 <f:selectItems value="#{selectComparison_MB.listOfPostCode1}" var="pref1" 
                                                                itemLabel="#{pref1}" itemValue="#{pref1.dbpostCodePK.postCodeId},#{pref1.dbpostCodePK.postCodeLine}"/>
                                                 <f:ajax listener="#{selectComparison_MB.processPreferences('one')}" render="@form"/>
                                             </h:selectOneMenu>
-                                        </div>
-                                        <div>
-                                            <i class="icon-close text-danger" style="display:#{selectComparison_MB.errorPreference1?'block':'none'}"
-                                               data-placement="top" title="#{selectComparison_MB.getFieldContent('general','error1')}"/>
                                         </div>
                                         <div class="col-sm">
                                             <h:selectOneMenu id="pref2" class="OneSelectPreferences" disabled="#{selectComparison_MB.activePreference2}" 
@@ -41,10 +43,6 @@
                                                                itemLabel="#{pref2}" itemValue="#{pref2.dbpostCodePK.postCodeId},#{pref2.dbpostCodePK.postCodeLine}"/>
                                                 <f:ajax listener="#{selectComparison_MB.processPreferences('two')}" render="@form"/>
                                             </h:selectOneMenu>
-                                        </div>
-                                        <div>
-                                            <i class="icon-close text-danger" style="display:#{selectComparison_MB.errorPreference2?'block':'none'}"
-                                               data-placement="top" title="#{selectComparison_MB.getFieldContent('general','error1')}"/>
                                         </div>
                                         <div class="col-sm">
                                             <h:selectOneMenu id="pref3" class="OneSelectPreferences" disabled="#{selectComparison_MB.activePreference3}" 

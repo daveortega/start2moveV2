@@ -201,3 +201,41 @@ div.chartBox {
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
+div.mapContainer {
+    width:100%; 
+    height:600px; 
+    margin-top: 10px;
+}
+
+div.chartContainer {
+    margin-left: 15px; 
+    margin-right: 15px; 
+    margin-top: 10px;
+}
+
+.icon1 {
+    background: url('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+    height: 30px;
+    width: 30px;
+    display: block;
+    /* Other styles here */
+}
+
+.icon2 {
+    background: url('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+    height: 30px;
+    width: 30px;
+    display: block;
+    /* Other styles here */
+}
+
+.icon3 {
+    background: url('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+    height: 30px;
+    width: 30px;
+    display: block;
+    /* Other styles here */
+}
+
+

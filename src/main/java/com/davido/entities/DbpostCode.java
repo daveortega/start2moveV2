@@ -186,7 +186,7 @@ public class DbpostCode implements Serializable {
 
     @Override
     public String toString() {
-        return dbpostCodePK.getPostCodeId() + " (" + postCodeName + ")";
+        return postCodeName + " (" + dbpostCodePK.getPostCodeId() + ")";
     }
     
 }
