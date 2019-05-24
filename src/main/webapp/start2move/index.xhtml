@@ -22,10 +22,10 @@
                                 <h:form id="indexForm">
                                     <div class="row justify-content-center">
                                         <div class="col-4">
-                                            <h:commandButton class="btn btn-block btn-lg btn-primary" value="#{index_MB.getFieldContent('button1')}" action="survey?faces-redirect=true"/>
+                                            <h:commandButton class="btn btn-block btn-primary" value="#{index_MB.getFieldContent('button1')}" action="survey?faces-redirect=true"/>
                                         </div>
                                         <div class="col-4">
-                                            <h:commandButton class="btn btn-block btn-lg btn-primary" value="#{index_MB.getFieldContent('button2')}" action="selectComp?faces-redirect=true"/>
+                                            <h:commandButton class="btn btn-block btn-primary" value="#{index_MB.getFieldContent('button2')}" action="selectComp?faces-redirect=true"/>
                                         </div>
                                     </div>
                                 </h:form>
@@ -97,33 +97,6 @@
                     </div>
                 </section>
 
-                <!-- Footer -->
-                <footer class="footer bg-light">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-                                <ul class="list-inline mb-2">
-                                    <li class="list-inline-item">
-                                        <a href="#">#{index_MB.getFieldContent('link1')}</a>
-                                    </li>
-                                    <li class="list-inline-item">&sdot;</li>
-                                    <li class="list-inline-item">
-                                        <a href="#">#{index_MB.getFieldContent('link2')}</a>
-                                    </li>
-                                    <li class="list-inline-item">&sdot;</li>
-                                    <li class="list-inline-item">
-                                        <a href="#">#{index_MB.getFieldContent('link3')}</a>
-                                    </li>
-                                    <li class="list-inline-item">&sdot;</li>
-                                    <li class="list-inline-item">
-                                        <a href="#">#{index_MB.getFieldContent('link4')}</a>
-                                    </li>
-                                </ul>
-                                <p class="text-muted small mb-4 mb-lg-0">&copy; #{index_MB.getFieldContent('content11')}</p>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </ui:define>
         </ui:composition>
     </body>

@@ -97,21 +97,24 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm resultBoxResult" style="display:#{compare_MB.object1.rentChart || 
-                                                                                             compare_MB.object2.rentChart ||
-                                                                                             compare_MB.object3.rentChart?'block':'none'}">
+                                        <div class="col-sm resultBoxResult" style="display:#{(compare_MB.object1.rentChart &amp;&amp;  compare_MB.object2.rentChart)
+                                                                                             || (compare_MB.object1.rentChart &amp;&amp;  compare_MB.object3.rentChart)
+                                                                                             || (compare_MB.object2.rentChart &amp;&amp;  compare_MB.object3.rentChart)
+                                                                                             ?'block':'none'}">
                                             <h6>#{compare_MB.getFieldContent('main','rentChart')}</h6>
                                             <canvas id="rentBarChart"></canvas>
                                         </div>
-                                        <div class="col-sm resultBoxResult" style="display:#{compare_MB.object1.houseChart || 
-                                                                                             compare_MB.object2.houseChart ||
-                                                                                             compare_MB.object3.houseChart?'block':'none'}">
+                                        <div class="col-sm resultBoxResult" style="display:#{(compare_MB.object1.houseChart &amp;&amp;  compare_MB.object2.houseChart) 
+                                                                                             || (compare_MB.object1.houseChart &amp;&amp;  compare_MB.object3.houseChart) 
+                                                                                             || (compare_MB.object2.houseChart &amp;&amp;  compare_MB.object3.houseChart)
+                                                                                             ?'block':'none'}">
                                             <h6>#{compare_MB.getFieldContent('main','houseChart')}</h6>
                                             <canvas id="HouseBarChart"></canvas>
                                         </div>
-                                        <div class="col-sm resultBoxResult" style="display:#{compare_MB.object1.landChart || 
-                                                                                             compare_MB.object2.landChart ||
-                                                                                             compare_MB.object3.landChart?'block':'none'}">
+                                        <div class="col-sm resultBoxResult" style="display:#{(compare_MB.object1.landChart &amp;&amp;  compare_MB.object2.landChart) 
+                                                                                             || (compare_MB.object1.landChart &amp;&amp;  compare_MB.object3.landChart) 
+                                                                                             || (compare_MB.object2.landChart &amp;&amp;  compare_MB.object3.landChart)
+                                                                                             ?'block':'none'}">
                                             <h6>#{compare_MB.getFieldContent('main','landChart')}</h6>
                                             <canvas id="LandBarChart"></canvas>
                                         </div>

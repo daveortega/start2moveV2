@@ -14,12 +14,17 @@
                     <div class="question">
                         <div class="jumbotron d-flex align-items-center">
                             <div class="container">
+                                <div class="alert alert-warning" role="alert" style="display:#{trend_MB.warningMsg != ''?'block':'none'}">
+                                    <div>
+                                        #{trend_MB.warningMsg}
+                                    </div>
+                                </div>
                                 <h1 class="display-4">#{trend_MB.getFieldContent('main','title')}</h1>
                                 <p class="lead">#{trend_MB.getFieldContent('main','explanation')}</p>
                                 <hr class="my-4"/>
                                 <div class="container">
                                     <div style="padding-top: 10px;">
-                                        <div class="row" style="display:#{trend_MB.object.crimeChart?'block':'none'}">
+                                        <div class="row resultBox" style="display:#{trend_MB.object.crimeChart?'block':'none'}">
                                             <h5>
                                                 #{trend_MB.getFieldContent('main','header1')} #{trend_MB.getFieldContent('main','in')}
                                                 #{trend_MB.object.postCodeName} (#{trend_MB.object.postCode})
@@ -27,7 +32,8 @@
                                             <p class="font-weight-light font-italic ">#{trend_MB.getFieldContent('main','hint1')}</p>
                                             <canvas id="crimeTrend"></canvas>
                                         </div>
-                                        <div class="row" style="display:#{trend_MB.object.houseChart?'block':'none'}">
+                                        <div class="row resultBox" style="display:#{trend_MB.object.houseChart?'block':'none'}">
+                                            <hr class="my-4"/>
                                             <h5>
                                                 #{trend_MB.getFieldContent('main','header2')} #{trend_MB.getFieldContent('main','in')}
                                                 #{trend_MB.object.postCodeName} (#{trend_MB.object.postCode})
@@ -35,7 +41,8 @@
                                             <p class="font-weight-light font-italic ">#{trend_MB.getFieldContent('main','hint2')}</p>
                                             <canvas id="houseTrend"></canvas>
                                         </div>
-                                        <div class="row" style="display:#{trend_MB.object.landChart?'block':'none'}">
+                                        <div class="row resultBox" style="display:#{trend_MB.object.landChart?'block':'none'}">
+                                            <hr class="my-4"/>
                                             <h5>
                                                 #{trend_MB.getFieldContent('main','header3')} #{trend_MB.getFieldContent('main','in')}
                                                 #{trend_MB.object.postCodeName} (#{trend_MB.object.postCode})

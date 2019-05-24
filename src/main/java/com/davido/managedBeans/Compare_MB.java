@@ -222,6 +222,10 @@ public class Compare_MB implements Serializable {
 
         addMapMarkers();
 
+        if (object3 == null) {
+            object3 = new comparisonObject();
+        }
+
         // Creating the first comparison bar chart
         if (object1.isPieChart() || object2.isPieChart() || object3.isPieChart()) {
             String[] Labels = {translateString("Schools"), translateString("Hospitals"), translateString("Bus Stops"),
@@ -229,15 +233,15 @@ public class Compare_MB implements Serializable {
 
             int[] dataArrayOne = {Integer.parseInt(object1.getSchoolsNo()), Integer.parseInt(object1.getHospitalsNo()),
                 Integer.parseInt(object1.getBusStopsNo()), Integer.parseInt(object1.getTrainStationsNo())};
-            datasetBarObject dataObj1 = new datasetBarObject(object1.getPostCodeName(), dataArrayOne, "rgba(255, 99, 132, 0.2)",
-                    "rgba(255, 99, 132, 1)", 1);
+            datasetBarObject dataObj1 = new datasetBarObject(object1.getPostCodeName(), dataArrayOne, "rgba(253, 116, 103, 0.2)",
+                    "rgba(253, 116, 103, 1)", 1);
             Gson gsonBuilder = new GsonBuilder().create();
             String firstDataSet = gsonBuilder.toJson(dataObj1);
 
             int[] dataArrayTwo = {Integer.parseInt(object2.getSchoolsNo()), Integer.parseInt(object2.getHospitalsNo()),
                 Integer.parseInt(object2.getBusStopsNo()), Integer.parseInt(object2.getTrainStationsNo())};
-            datasetBarObject dataObj2 = new datasetBarObject(object2.getPostCodeName(), dataArrayTwo, "rgba(0, 189, 184, 0.2)",
-                    "rgba(0, 189, 184, 1)", 1);
+            datasetBarObject dataObj2 = new datasetBarObject(object2.getPostCodeName(), dataArrayTwo, "rgba(1, 230, 77, 0.2)",
+                    "rgba(1, 230, 77, 1)", 1);
             String secondDataSet = gsonBuilder.toJson(dataObj2);
 
             int yAxisMax = 3;
@@ -257,8 +261,8 @@ public class Compare_MB implements Serializable {
             if (object3 != null && object3.isNonEmptyObj()) {
                 int[] dataArrayThree = {Integer.parseInt(object3.getSchoolsNo()), Integer.parseInt(object3.getHospitalsNo()),
                     Integer.parseInt(object3.getBusStopsNo()), Integer.parseInt(object3.getTrainStationsNo())};
-                datasetBarObject dataObj3 = new datasetBarObject(object3.getPostCodeName(), dataArrayThree, "rgba(54, 162, 235, 0.2)",
-                        "rgba(54, 162, 235, 1)", 1);
+                datasetBarObject dataObj3 = new datasetBarObject(object3.getPostCodeName(), dataArrayThree, "rgba(104, 144, 252, 0.2)",
+                        "rgba(104, 144, 252, 1)", 1);
                 thirdDataSet = gsonBuilder.toJson(dataObj3);
 
                 for (int i = 0; i < dataArrayThree.length; i++) {
@@ -269,11 +273,8 @@ public class Compare_MB implements Serializable {
             }
             yAxisMax += 10;
             int step = yAxisMax / 10;
-            callJavaScript3Bar("generalCompBar", Labels, firstDataSet, secondDataSet, object3 != null, thirdDataSet, yAxisMax, step);
-        }
-
-        if (object3 == null) {
-            object3 = new comparisonObject();
+            callJavaScript3Bar("generalCompBar", Labels, firstDataSet, secondDataSet, object3.isPieChart(), thirdDataSet,
+                    (int) Math.ceil((double) (yAxisMax / 10)) * 10, step);
         }
 
         // build the crime rate chart
@@ -299,9 +300,9 @@ public class Compare_MB implements Serializable {
                 }
             }
 
-            datasetLineObject dataObj1 = new datasetLineObject(object1.getPostCodeName(), dataArrayOne, false, "rgba(255, 99, 132, 1)", 0.1);
+            datasetLineObject dataObj1 = new datasetLineObject(object1.getPostCodeName(), dataArrayOne, false, "rgba(253, 116, 103, 1)", 0.1);
             String firstDataSet = gsonBuilder.toJson(dataObj1);
-            datasetLineObject dataObj2 = new datasetLineObject(object2.getPostCodeName(), dataArrayTwo, false, "rgba(0, 189, 184, 1)", 0.1);
+            datasetLineObject dataObj2 = new datasetLineObject(object2.getPostCodeName(), dataArrayTwo, false, "rgba(1, 230, 77, 1)", 0.1);
             String secondDataSet = gsonBuilder.toJson(dataObj2);
 
             Double[] dataArrayThree;
@@ -342,8 +343,8 @@ public class Compare_MB implements Serializable {
                         yAxisMax = dataArrayOne[i];
                     }
                 }
-                datasetBarObject dataObj1 = new datasetBarObject(object1.getPostCodeName(), dataArrayOne, "rgba(255, 99, 132, 0.2)",
-                        "rgba(255, 99, 132, 1)", 1);
+                datasetBarObject dataObj1 = new datasetBarObject(object1.getPostCodeName(), dataArrayOne, "rgba(253, 116, 103, 0.2)",
+                        "rgba(253, 116, 103, 1)", 1);
                 firstDataSet = gsonBuilder.toJson(dataObj1);
             }
 
@@ -361,8 +362,8 @@ public class Compare_MB implements Serializable {
                     }
                 }
 
-                datasetBarObject dataObj2 = new datasetBarObject(object2.getPostCodeName(), dataArrayTwo, "rgba(0, 189, 184, 0.2)",
-                        "rgba(0, 189, 184, 1)", 1);
+                datasetBarObject dataObj2 = new datasetBarObject(object2.getPostCodeName(), dataArrayTwo, "rgba(1, 230, 77, 0.2)",
+                        "rgba(1, 230, 77, 1)", 1);
                 secondDataSet = gsonBuilder.toJson(dataObj2);
             }
 
@@ -385,7 +386,7 @@ public class Compare_MB implements Serializable {
             }
             yAxisMax += 100;
             callJavaScript3BarCheck("rentBarChart", Labels, object1.isRentChart(), firstDataSet, object2.isRentChart(), secondDataSet,
-                    object3.isRentChart(), thirdDataSet, yAxisMax, 100);
+                    object3.isRentChart(), thirdDataSet, (int) Math.ceil((double) (yAxisMax / 100)) * 100, 100);
         }
 
         // build the house chart
@@ -408,8 +409,8 @@ public class Compare_MB implements Serializable {
                         yAxisMax = dataArrayOne[i];
                     }
                 }
-                datasetBarObject dataObj1 = new datasetBarObject(object1.getPostCodeName(), dataArrayOne, "rgba(255, 99, 132, 0.2)",
-                        "rgba(255, 99, 132, 1)", 1);
+                datasetBarObject dataObj1 = new datasetBarObject(object1.getPostCodeName(), dataArrayOne, "rgba(253, 116, 103, 0.2)",
+                        "rgba(253, 116, 103, 1)", 1);
                 firstDataSet = gsonBuilder.toJson(dataObj1);
             }
 
@@ -426,8 +427,8 @@ public class Compare_MB implements Serializable {
                         yAxisMax = dataArrayTwo[i];
                     }
                 }
-                datasetBarObject dataObj2 = new datasetBarObject(object2.getPostCodeName(), dataArrayTwo, "rgba(0, 189, 184, 0.2)",
-                        "rgba(0, 189, 184, 1)", 1);
+                datasetBarObject dataObj2 = new datasetBarObject(object2.getPostCodeName(), dataArrayTwo, "rgba(1, 230, 77, 0.2)",
+                        "rgba(1, 230, 77, 1)", 1);
                 secondDataSet = gsonBuilder.toJson(dataObj2);
             }
 
@@ -450,7 +451,7 @@ public class Compare_MB implements Serializable {
             }
             yAxisMax += 50000;
             callJavaScript3BarCheck("HouseBarChart", Labels, object1.isHouseChart(), firstDataSet, object2.isHouseChart(), secondDataSet,
-                    object3.isHouseChart(), thirdDataSet, yAxisMax, 100000);
+                    object3.isHouseChart(), thirdDataSet, (int) Math.ceil((double) (yAxisMax / 100000)) * 100000, 200000);
         }
 
         // build the land chart
@@ -473,8 +474,8 @@ public class Compare_MB implements Serializable {
                         yAxisMax = dataArrayOne[i];
                     }
                 }
-                datasetBarObject dataObj1 = new datasetBarObject(object1.getPostCodeName(), dataArrayOne, "rgba(255, 99, 132, 0.2)",
-                        "rgba(255, 99, 132, 1)", 1);
+                datasetBarObject dataObj1 = new datasetBarObject(object1.getPostCodeName(), dataArrayOne, "rgba(253, 116, 103, 0.2)",
+                        "rgba(253, 116, 103, 1)", 1);
                 firstDataSet = gsonBuilder.toJson(dataObj1);
             }
 
@@ -491,8 +492,8 @@ public class Compare_MB implements Serializable {
                         yAxisMax = dataArrayTwo[i];
                     }
                 }
-                datasetBarObject dataObj2 = new datasetBarObject(object2.getPostCodeName(), dataArrayTwo, "rgba(0, 189, 184, 0.2)",
-                        "rgba(0, 189, 184, 1)", 1);
+                datasetBarObject dataObj2 = new datasetBarObject(object2.getPostCodeName(), dataArrayTwo, "rgba(1, 230, 77, 0.2)",
+                        "rgba(1, 230, 77, 1)", 1);
                 secondDataSet = gsonBuilder.toJson(dataObj2);
             }
 
@@ -515,7 +516,7 @@ public class Compare_MB implements Serializable {
             }
             yAxisMax += 100000;
             callJavaScript3BarCheck("LandBarChart", Labels, object1.isLandChart(), firstDataSet, object2.isLandChart(),
-                    secondDataSet, object3.isLandChart(), thirdDataSet, yAxisMax, 100000);
+                    secondDataSet, object3.isLandChart(), thirdDataSet, (int) Math.ceil((double) (yAxisMax / 100000)) * 100000, 200000);
         }
     }
 

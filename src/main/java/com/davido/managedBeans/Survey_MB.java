@@ -634,7 +634,7 @@ public class Survey_MB implements Serializable {
         enableTrainSationsBack = false;
         resetPreferences();
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("comparePostCodes", null);
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("suggestedPostCodes",  null);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("suggestedPostCodes", null);
     }
 
     /**
@@ -839,8 +839,8 @@ public class Survey_MB implements Serializable {
                         enableRealStateRentRange2 = true;
                         listOfRealStateRent1 = new ArrayList<>();
                         List<Object[]> tmpList = dbhouseRentFacade.findHouseRentPostCode();
-                        listOfRealStateRent1 = createNormalizedList( Integer.parseInt(((Object) tmpList.get(0)).toString()), 
-                                Integer.parseInt(((Object) tmpList.get(tmpList.size() - 1)).toString()), 10, 10);
+                        listOfRealStateRent1 = createNormalizedList(Integer.parseInt(((Object) tmpList.get(0)).toString()),
+                                Integer.parseInt(((Object) tmpList.get(tmpList.size() - 1)).toString()), 50, 50);
                         break;
                     case "Real Estate Prices":
                         enableRealStatePrices = true;
@@ -849,8 +849,8 @@ public class Survey_MB implements Serializable {
                         enableRealStatePricesRange2 = true;
                         listOfRealStatePrices1 = new ArrayList<>();
                         List<Object[]> tmpList1 = dbhouseBuyingFacade.findHouseBuyPostCode();
-                        listOfRealStatePrices1 = createNormalizedList( Integer.parseInt(((Object) tmpList1.get(0)).toString()), 
-                                Integer.parseInt(((Object) tmpList1.get(tmpList1.size() - 1)).toString()), 10000, 20000);
+                        listOfRealStatePrices1 = createNormalizedList(Integer.parseInt(((Object) tmpList1.get(0)).toString()),
+                                Integer.parseInt(((Object) tmpList1.get(tmpList1.size() - 1)).toString()), 50000, 100000);
                         break;
                     case "Land Prices":
                         enableRealStateBuyLand = true;
@@ -859,8 +859,8 @@ public class Survey_MB implements Serializable {
                         enableRealStateBuyLandRange2 = true;
                         listOfRealStateBuyLand1 = new ArrayList<>();
                         List<Object[]> tmpList2 = dblandPriceFacade.findBuyLandPostCode();
-                        listOfRealStateBuyLand1 = createNormalizedList( Integer.parseInt(((Object) tmpList2.get(0)).toString()), 
-                                Integer.parseInt(((Object) tmpList2.get(tmpList2.size() - 1)).toString()), 10000, 20000);
+                        listOfRealStateBuyLand1 = createNormalizedList(Integer.parseInt(((Object) tmpList2.get(0)).toString()),
+                                Integer.parseInt(((Object) tmpList2.get(tmpList2.size() - 1)).toString()), 50000, 100000);
                         break;
                     case "Train Stations":
                         enableTrainSations = true;
@@ -1367,16 +1367,18 @@ public class Survey_MB implements Serializable {
         }
         return String.join(",", currentList);
     }
-    
-    private List<String> createNormalizedList(int begin, int end, int base, int step){
+
+    private List<String> createNormalizedList(int begin, int end, int base, int step) {
         List<String> resultantList = new ArrayList<>();
-        int secondNumber = (int) Math.ceil((double) (begin / base)) * base;
-        int seconLastNumber = (int) Math.floor((double) (end / base)) * base;
-        resultantList.add(Integer.toString(begin));
+        int secondNumber = (int) Math.floor((double) (begin / base)) * base;
+        int seconLastNumber = (int) Math.ceil((double) (end / base)) * base;
+        resultantList.add(Integer.toString(secondNumber));
         for (int i = secondNumber; i < seconLastNumber; i += step) {
-            resultantList.add(Integer.toString(i));
+            if (i > secondNumber) {
+                resultantList.add(Integer.toString(i));
+            }
         }
-        resultantList.add(Integer.toString(end));
+        resultantList.add(Integer.toString(seconLastNumber));
         return resultantList;
     }
 

@@ -54,9 +54,14 @@ public class Trend_MB implements Serializable {
     // Business Variables
     private trendObject object;
     private String sourceComparison;
+    private String warningMsg;
 
     public trendObject getObject() {
         return object;
+    }
+
+    public String getWarningMsg() {
+        return warningMsg;
     }
 
     /**
@@ -199,11 +204,11 @@ public class Trend_MB implements Serializable {
             callJavaScript3Line("crimeTrend", Labels, firstDataSet, secondDataSet, false, "", yAxisMax, 1.0);
 
         }
-        
+
         if (object.isHouseChart()) {
             int yAxisMax = 3;
             String[] Labels = object.getHouseChartLabels();
-            
+
             for (int i = 0; i < object.getHouseChartLabels().length; i++) {
                 if (!object.getHouseChartValues()[i].equals("null")
                         && (int) Math.round(Double.parseDouble(object.getHouseChartValues()[i])) > yAxisMax) {
@@ -214,14 +219,14 @@ public class Trend_MB implements Serializable {
                     yAxisMax = (int) Math.round(Double.parseDouble(object.getHouseChartTrends()[i]));
                 }
             }
-            
+
             for (int i = 0; i < object.getHouseChartLabels().length; i++) {
                 if (!object.getHouseChartTrends()[i].equals("null")) {
                     object.getHouseChartTrends()[i - 1] = object.getHouseChartValues()[i - 1];
                     break;
                 }
             }
-            
+
             datasetLineObject dataObj1 = new datasetLineObject("Current", object.getHouseChartValues(), false,
                     "rgb(75, 192, 192)", 0.1);
             String firstDataSet = gsonBuilder.toJson(dataObj1);
@@ -230,13 +235,14 @@ public class Trend_MB implements Serializable {
             String secondDataSet = gsonBuilder.toJson(dataObj2);
 
             yAxisMax += 100000;
-            callJavaScript3Line("houseTrend", Labels, firstDataSet, secondDataSet, false, "", yAxisMax, 100000);
+            callJavaScript3Line("houseTrend", Labels, firstDataSet, secondDataSet, false, "", 
+                    (int) Math.ceil((double) (yAxisMax / 100000)) * 100000, 100000);
         }
 
         if (object.isLandChart()) {
             int yAxisMax = 3;
             String[] Labels = object.getLandChartLabels();
-            
+
             for (int i = 0; i < object.getLandChartLabels().length; i++) {
                 if (!object.getLandChartValues()[i].equals("null")
                         && (int) Math.round(Double.parseDouble(object.getLandChartValues()[i])) > yAxisMax) {
@@ -247,14 +253,14 @@ public class Trend_MB implements Serializable {
                     yAxisMax = (int) Math.round(Double.parseDouble(object.getLandChartTrends()[i]));
                 }
             }
-            
+
             for (int i = 0; i < object.getLandChartLabels().length; i++) {
                 if (!object.getLandChartTrends()[i].equals("null")) {
                     object.getLandChartTrends()[i - 1] = object.getLandChartValues()[i - 1];
                     break;
                 }
             }
-            
+
             datasetLineObject dataObj1 = new datasetLineObject("Current", object.getLandChartValues(), false,
                     "rgb(75, 192, 192)", 0.1);
             String firstDataSet = gsonBuilder.toJson(dataObj1);
@@ -263,9 +269,11 @@ public class Trend_MB implements Serializable {
             String secondDataSet = gsonBuilder.toJson(dataObj2);
 
             yAxisMax += 100000;
-            callJavaScript3Line("landTrend", Labels, firstDataSet, secondDataSet, false, "", yAxisMax, 100000);
+            callJavaScript3Line("landTrend", Labels, firstDataSet, secondDataSet, false, "", 
+                    (int) Math.ceil((double) (yAxisMax / 100000)) * 100000, 100000);
         }
-        
+
+        createWarnningMsg();
     }
 
     private trendObject buildObject(comparisonItem item) {
@@ -311,6 +319,25 @@ public class Trend_MB implements Serializable {
             int yAxisMax, double stepSize) {
         PrimeFaces.current().executeScript("Process3LineChart('" + JSObject + "','" + String.join(",", Labels) + "','" + datasetOne + "','" + datasetTwo
                 + "','" + dataSet3 + "','" + datasetThree + "','" + yAxisMax + "','" + stepSize + "');");
+    }
+
+    private void createWarnningMsg() {
+        warningMsg = "";
+        if (!object.isCrimeChart() && !object.isHouseChart() && !object.isLandChart()) {
+            warningMsg = translateString("Start2move does not have trend information for the selected post code.");
+        } else if (!object.isCrimeChart() && !object.isHouseChart()) {
+            warningMsg = translateString("Start2move does not have crime and house prices trend information for the selected post code.");
+        } else if (!object.isHouseChart() && !object.isLandChart()) {
+            warningMsg = translateString("Start2move does not have house and land prices trend information for the selected post code.");
+        } else if (!object.isCrimeChart() && !object.isLandChart()) {
+            warningMsg = translateString("Start2move does not have crime and land prices trend information for the selected post code.");
+        } else if (!object.isCrimeChart()) {
+            warningMsg = translateString("Start2move does not have crime trend information for the selected post code.");
+        } else if (!object.isHouseChart()) {
+            warningMsg = translateString("Start2move does not have house prices trend information for the selected post code.");
+        } else if (!object.isLandChart()) {
+            warningMsg = translateString("Start2move does not have land prices trend information for the selected post code.");
+        }
     }
 
     class datasetLineObject {

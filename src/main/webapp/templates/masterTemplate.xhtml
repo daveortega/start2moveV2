@@ -8,10 +8,11 @@
     <h:head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <meta name="description" content="" />
-        <meta name="author" content="" />
+        <meta name="description" content="Moving to regional victoria is easy with start2move" />
+        <meta name="author" content="Dui Team" />
+        <meta name="google" content="notranslate"/>
 
-        <title>Start to Move - Regional Victoria</title>
+        <title>Start 2 Move - Regional Victoria</title>
 
         <!-- Bootstrap core CSS -->
         <link href="../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
@@ -37,24 +38,26 @@
                 </h:form>
 
                 <!-- Navigation -->
-                <h:form id="menuForm">
-                    <nav class="navbar navbar-expand-md navbar-light bg-light">
-                        <div class="container">
-                            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <nav class="navbar navbar-expand-md navbar-light bg-light">
+                    <div class="container">
+                        <div class="logo-div">
+                            <i class="fas fa-map-signs fa-2x text-primary"></i>
+                        </div>
+                        <a class="navbar-brand" href="index.xhtml">Start2Move</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                            <ul class="navbar-nav mt-2 ml-auto mr-3">
+                                <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link1')}" outcome="index" />
+                                <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link2')}" outcome="survey" />
+                                <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link3')}" outcome="selectComp"/>
+                                <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link4')}" outcome="selecTrend"/>
+                            </ul>
+                            <h:form class="form-inline my-2 my-lg-0 mr-5">
                                 <div class="logo-div">
-                                    <i class="fas fa-map-signs fa-2x text-primary"></i>
-                                </div>
-                                <h:link class="navbar-brand" value="Start2Move" outcome="index" />
-                            </div>
-                            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                                <nav class="my-2 my-md-0 mr-md-3">
-                                    <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link1')}" outcome="index" />
-                                    <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link2')}" outcome="survey" />
-                                    <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link3')}" outcome="selectComp"/>
-                                    <h:link class="p-2 text-dark" value="#{menu_MB.getFieldContent('navbar','link4')}" outcome="selecTrend"/>
-                                </nav>
-                                <div class="logo-div">
-                                    <h:commandButton value="#{menu_MB.getFieldContent('navbar','button')}" 
+                                    <h:commandButton disabled="true"
+                                                     value="#{menu_MB.getFieldContent('navbar','button')}" 
                                                      class="btn btn-outline-danger" 
                                                      action="#{logoutBacking.submit}"/>
                                 </div>
@@ -63,10 +66,12 @@
                                         #{language_MB.language}
                                     </button>
                                 </div>
-                            </div> 
-                        </div>
-                    </nav>
-                </h:form>
+                            </h:form>
+                        </div> 
+                    </div>
+                </nav>
+
+
             </ui:insert>
         </div>
 
