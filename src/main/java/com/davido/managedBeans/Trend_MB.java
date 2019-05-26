@@ -77,7 +77,7 @@ public class Trend_MB implements Serializable {
         getTrends();
     }
     
-    // <-------------------- Language control layer ----------------------->
+    // <-------------------- Language control 
 
     // Create the global variable for the language for view scope beans
     private void setUpLanguage() {
