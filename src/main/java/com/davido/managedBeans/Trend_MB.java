@@ -76,6 +76,8 @@ public class Trend_MB implements Serializable {
         getPageContent();
         getTrends();
     }
+    
+    // <-------------------- Language control layer ----------------------->
 
     // Create the global variable for the language for view scope beans
     private void setUpLanguage() {
@@ -151,6 +153,8 @@ public class Trend_MB implements Serializable {
         }
         return text;
     }
+    
+    // <--------------- Business Logic section --------------------------->
 
     // This method returns to the original page
     public void returnToOrigin() {
@@ -165,6 +169,7 @@ public class Trend_MB implements Serializable {
         }
     }
 
+    // This method calculate the trends for the selected suburb
     private void getTrends() {
         comparisonItem trendItem = (comparisonItem) FacesContext.getCurrentInstance().getExternalContext().
                 getSessionMap().get("trendPostCode");
@@ -276,6 +281,7 @@ public class Trend_MB implements Serializable {
         createWarnningMsg();
     }
 
+    // This method builds the comparison objext
     private trendObject buildObject(comparisonItem item) {
         trendObject tmpTrdObj = new trendObject();
         tmpTrdObj.setNonEmptyObj(true);
@@ -315,12 +321,14 @@ public class Trend_MB implements Serializable {
         return tmpTrdObj;
     }
 
+    // Call the JavaScript function for building the chart
     private void callJavaScript3Line(String JSObject, String[] Labels, String datasetOne, String datasetTwo, boolean dataSet3, String datasetThree,
             int yAxisMax, double stepSize) {
         PrimeFaces.current().executeScript("Process3LineChart('" + JSObject + "','" + String.join(",", Labels) + "','" + datasetOne + "','" + datasetTwo
                 + "','" + dataSet3 + "','" + datasetThree + "','" + yAxisMax + "','" + stepSize + "');");
     }
 
+    // Creates the warnning when required
     private void createWarnningMsg() {
         warningMsg = "";
         if (!object.isCrimeChart() && !object.isHouseChart() && !object.isLandChart()) {
@@ -340,6 +348,7 @@ public class Trend_MB implements Serializable {
         }
     }
 
+    // This is a nested class to containt a temporal object.
     class datasetLineObject {
 
         public String label;
